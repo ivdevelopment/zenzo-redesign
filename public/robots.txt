@@ -1,0 +1,4 @@
+# Unofficial redesign concept — not affiliated with Zenzo.
+# This site should not be crawled or indexed.
+User-agent: *
+Disallow: /

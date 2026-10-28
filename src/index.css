@@ -1,0 +1,250 @@
+@import '@fontsource/cormorant-garamond/latin-300.css';
+@import '@fontsource/cormorant-garamond/latin-400.css';
+@import '@fontsource/cormorant-garamond/latin-400-italic.css';
+@import '@fontsource/cormorant-garamond/latin-500.css';
+@import '@fontsource-variable/manrope/wght.css';
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------
+   Visual system — see docs/DESIGN.md
+   Black, warm bronze, champagne gold. Red and amber come from the
+   photography, never from the UI.
+   ------------------------------------------------------------------ */
+
+@theme {
+  /* Surfaces */
+  --color-ink: #080807;
+  --color-coal: #11100e;
+  --color-bronze: #281a13;
+  --color-bronze-deep: #1b120d;
+
+  /* Text */
+  --color-bone: #f1ece2;
+  --color-smoke: #a9a39a;
+  --color-mute: #857f75;
+
+  /* Champagne gold — rules, active states, one heading gradient */
+  --color-gold: #c8a978;
+  --color-gold-soft: #e6d3a3;
+  --color-gold-deep: #9c7b4c;
+
+  --color-line: rgb(200 169 120 / 0.2);
+  --color-line-strong: rgb(200 169 120 / 0.42);
+
+  --font-display: 'Cormorant Garamond', 'Cormorant', 'Times New Roman', serif;
+  --font-sans: 'Manrope Variable', 'Helvetica Neue', Arial, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --animate-settle: settle 3.2s var(--ease-out-expo) both;
+  --animate-scroll-cue: scroll-cue 2.6s var(--ease-in-out-quart) infinite;
+  --animate-curtain: curtain 0.7s var(--ease-out-expo) both;
+  --animate-rise: rise 0.9s var(--ease-out-expo) both;
+  --animate-fade: fade 0.5s ease-out both;
+
+  /* Slow, one-time settle of the hero photograph */
+  @keyframes settle {
+    from {
+      transform: scale(1.1);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes scroll-cue {
+    0% {
+      transform: scaleY(0);
+      transform-origin: top;
+    }
+    45% {
+      transform: scaleY(1);
+      transform-origin: top;
+    }
+    55% {
+      transform: scaleY(1);
+      transform-origin: bottom;
+    }
+    100% {
+      transform: scaleY(0);
+      transform-origin: bottom;
+    }
+  }
+
+  @keyframes curtain {
+    from {
+      clip-path: inset(0 0 100% 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 40%, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --gutter: clamp(1.25rem, 4.6vw, 5rem);
+    --section-y: clamp(2.75rem, 7vw, 6.5rem);
+    --strip-h: 1.75rem;
+    --header-h: 4.25rem;
+  }
+
+  @media (max-width: 22.5rem) {
+    :root {
+      /* The disclaimer wraps to two lines on the narrowest phones */
+      --strip-h: 2.5rem;
+    }
+  }
+
+  html {
+    background: var(--color-ink);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: calc(var(--strip-h) + var(--header-h));
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    min-height: 100svh;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-gold-soft);
+    outline-offset: 4px;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  dialog::backdrop {
+    background: transparent;
+  }
+
+  /* No page scroll while a modal (menu, lightbox) is open */
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+}
+
+@utility container-x {
+  width: 100%;
+  max-width: 1680px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@utility section-y {
+  padding-block: var(--section-y);
+}
+
+/* Small uppercase utility label */
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  line-height: 1.3;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+/* Editorial serif — light, high contrast, usually set in capitals */
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  /* Cormorant defaults to old-style figures; lining ones read as numbers on a menu or sign */
+  font-variant-numeric: lining-nums;
+}
+
+/* Champagne gradient for the few headings that carry it */
+@utility gold-text {
+  background-image: linear-gradient(115deg, #f4e8c4 0%, #dcc28c 45%, #b08f58 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* The hero wordmark: the champagne gradient, deepening toward the baseline so it settles into the crowd below it */
+@utility gold-text-hero {
+  background-image:
+    linear-gradient(180deg, rgb(8 7 6 / 0) 42%, rgb(8 7 6 / 0.5) 100%),
+    linear-gradient(115deg, #f6ebc9 0%, #dcc28c 48%, #b08f58 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Thin film grain over photography. Static, so it costs nothing at runtime. */
+@utility grain {
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.08;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* Underline that draws in from the left */
+@utility link-line {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.6s var(--ease-out-expo);
+
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

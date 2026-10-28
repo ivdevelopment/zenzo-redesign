@@ -1,0 +1,328 @@
+{
+  "logo": {
+    "width": 419,
+    "height": 340
+  },
+  "images": {
+    "hero": {
+      "widths": [
+        640,
+        1024,
+        1617
+      ],
+      "width": 1617,
+      "height": 914,
+      "tone": "#0d0404"
+    },
+    "hero-m": {
+      "widths": [
+        480,
+        808
+      ],
+      "width": 809,
+      "height": 914,
+      "tone": "#160404"
+    },
+    "atmo-main": {
+      "widths": [
+        640,
+        1024,
+        1618
+      ],
+      "width": 1618,
+      "height": 921,
+      "tone": "#040404"
+    },
+    "atmo-inset": {
+      "widths": [
+        480,
+        808
+      ],
+      "width": 810,
+      "height": 720,
+      "tone": "#0d0404"
+    },
+    "g1": {
+      "widths": [
+        320,
+        484
+      ],
+      "width": 484,
+      "height": 904,
+      "tone": "#0d0404"
+    },
+    "g2": {
+      "widths": [
+        640,
+        1000,
+        1231
+      ],
+      "width": 1231,
+      "height": 849,
+      "tone": "#0d0404"
+    },
+    "g3": {
+      "widths": [
+        640,
+        889
+      ],
+      "width": 889,
+      "height": 640,
+      "tone": "#0d0404"
+    },
+    "g4": {
+      "widths": [
+        640,
+        1000,
+        1133
+      ],
+      "width": 1133,
+      "height": 783,
+      "tone": "#040404"
+    },
+    "g5": {
+      "widths": [
+        320,
+        484
+      ],
+      "width": 484,
+      "height": 307,
+      "tone": "#773916"
+    },
+    "g6": {
+      "widths": [
+        640,
+        1000,
+        1134
+      ],
+      "width": 1134,
+      "height": 462,
+      "tone": "#040404"
+    },
+    "vip-bottle": {
+      "widths": [
+        480,
+        758
+      ],
+      "width": 758,
+      "height": 904,
+      "tone": "#0d0404"
+    },
+    "vip-lounge": {
+      "widths": [
+        480,
+        760
+      ],
+      "width": 761,
+      "height": 923,
+      "tone": "#0d0404"
+    },
+    "vip-party": {
+      "widths": [
+        480,
+        760
+      ],
+      "width": 760,
+      "height": 914,
+      "tone": "#160404"
+    },
+    "city": {
+      "widths": [
+        640,
+        1024,
+        1600
+      ],
+      "width": 2400,
+      "height": 960,
+      "tone": "#0d0404"
+    },
+    "ph-gallery": {
+      "widths": [
+        640,
+        1024,
+        1620
+      ],
+      "width": 1620,
+      "height": 572,
+      "tone": "#0d0404"
+    },
+    "ph-vip": {
+      "widths": [
+        640,
+        1024,
+        1613
+      ],
+      "width": 1613,
+      "height": 651,
+      "tone": "#040404"
+    },
+    "ph-about": {
+      "widths": [
+        640,
+        1024,
+        1618
+      ],
+      "width": 1618,
+      "height": 645,
+      "tone": "#040404"
+    },
+    "ph-lost": {
+      "widths": [
+        640,
+        1024,
+        1618
+      ],
+      "width": 1618,
+      "height": 460,
+      "tone": "#040404"
+    },
+    "gal-ring-wide": {
+      "widths": [
+        640,
+        1024,
+        1620
+      ],
+      "width": 1620,
+      "height": 923,
+      "tone": "#040404"
+    },
+    "gal-bucket-tall": {
+      "widths": [
+        480,
+        645
+      ],
+      "width": 645,
+      "height": 904,
+      "tone": "#040404"
+    },
+    "gal-screen-detail": {
+      "widths": [
+        452
+      ],
+      "width": 452,
+      "height": 289,
+      "tone": "#1f0404"
+    },
+    "gal-confetti-pano": {
+      "widths": [
+        640,
+        1024,
+        1617
+      ],
+      "width": 1617,
+      "height": 512,
+      "tone": "#160404"
+    },
+    "gal-ring-detail": {
+      "widths": [
+        480,
+        583
+      ],
+      "width": 583,
+      "height": 314,
+      "tone": "#0d0404"
+    },
+    "gal-lantern": {
+      "widths": [
+        640,
+        809
+      ],
+      "width": 809,
+      "height": 571,
+      "tone": "#040404"
+    },
+    "gal-ceiling": {
+      "widths": [
+        640,
+        890
+      ],
+      "width": 890,
+      "height": 571,
+      "tone": "#040404"
+    },
+    "gal-arms-noir": {
+      "widths": [
+        480,
+        614
+      ],
+      "width": 614,
+      "height": 749,
+      "tone": "#0d0d0d"
+    },
+    "gal-crowd-pano": {
+      "widths": [
+        640,
+        1024,
+        1618
+      ],
+      "width": 1618,
+      "height": 460,
+      "tone": "#040404"
+    },
+    "gal-railing": {
+      "widths": [
+        480,
+        680
+      ],
+      "width": 680,
+      "height": 462,
+      "tone": "#040404"
+    },
+    "gal-laser-lines": {
+      "widths": [
+        640,
+        810
+      ],
+      "width": 810,
+      "height": 508,
+      "tone": "#0d0404"
+    },
+    "gal-confetti-detail": {
+      "widths": [
+        320,
+        485
+      ],
+      "width": 485,
+      "height": 311,
+      "tone": "#280404"
+    },
+    "vipp-bottle": {
+      "widths": [
+        640,
+        903
+      ],
+      "width": 903,
+      "height": 904,
+      "tone": "#0d0404"
+    },
+    "vipp-lounge": {
+      "widths": [
+        640,
+        1000,
+        1490
+      ],
+      "width": 1490,
+      "height": 886,
+      "tone": "#040404"
+    },
+    "vipp-party": {
+      "widths": [
+        640,
+        1000,
+        1132
+      ],
+      "width": 1132,
+      "height": 914,
+      "tone": "#160404"
+    },
+    "city-tall": {
+      "widths": [
+        480,
+        960
+      ],
+      "width": 960,
+      "height": 1600,
+      "tone": "#0d0404"
+    }
+  }
+}

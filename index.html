@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Unofficial portfolio concept: keep it out of search results. -->
+    <meta name="robots" content="noindex, nofollow, noarchive, noimageindex" />
+
+    <title>Zenzo — Unofficial Redesign Concept</title>
+    <meta
+      name="description"
+      content="An unofficial, independently created redesign concept for Zenzo, Eiermarkt 13, Brugge. Not affiliated with Zenzo."
+    />
+    <meta name="theme-color" content="#080807" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/png" sizes="32x32" href="%BASE_URL%assets/zenzo/favicon-32x32.png" />
+
+    <!--home-preload-->
+    <!-- Homepage hero photograph: desktop and phone crops, preloaded for the matching viewport only -->
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      media="(min-width: 768px)"
+      imagesrcset="%BASE_URL%assets/zenzo/hero-640.webp 640w, %BASE_URL%assets/zenzo/hero-1024.webp 1024w, %BASE_URL%assets/zenzo/hero-1617.webp 1617w"
+      imagesizes="100vw"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      media="(max-width: 767px)"
+      imagesrcset="%BASE_URL%assets/zenzo/hero-m-480.webp 480w, %BASE_URL%assets/zenzo/hero-m-808.webp 808w"
+      imagesizes="100vw"
+      fetchpriority="high"
+    />
+    <!--/home-preload-->
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <p style="padding: 2rem; font-family: sans-serif; color: #f1ece2; background: #080807">
+        Unofficial redesign concept — Not affiliated with Zenzo. This concept requires JavaScript.
+      </p>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
