@@ -27,12 +27,12 @@ export function Hero() {
             priority
             sizes="100vw"
             alt=""
-            className="h-full w-full object-cover object-[50%_24%] brightness-[1.22] saturate-[1.05]"
+            className="h-full w-full object-cover object-[50%_24%] brightness-[0.85] saturate-[1.05]"
           />
         </div>
         {/* The grade deepens toward the foot of the hero, where the wordmark sits in the crowd */}
-        <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/25 via-45% to-transparent" />
-        <div className="absolute inset-y-0 left-0 w-3/4 bg-linear-to-r from-ink/45 to-transparent max-md:hidden" />
+        <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/55 via-50% to-ink/25" />
+        <div className="absolute inset-y-0 left-0 w-3/4 bg-linear-to-r from-ink/60 to-transparent max-md:hidden" />
         {/* Lights up: an ink veil lifts, so the photograph itself paints immediately */}
         <m.div
           aria-hidden="true"
