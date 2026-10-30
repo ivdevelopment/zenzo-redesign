@@ -33,6 +33,8 @@ export function Hero() {
         {/* The grade deepens toward the foot of the hero, where the wordmark sits in the crowd */}
         <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/40 via-38% to-transparent" />
         <div className="absolute inset-y-0 left-0 w-3/4 bg-linear-to-r from-ink/55 to-transparent max-md:hidden" />
+        {/* A soft pool of shade behind the text cluster; the rest of the photograph stays bright */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_90%_55%_at_20%_82%,rgb(8_8_7/0.82),transparent_72%)] md:bg-[radial-gradient(ellipse_55%_62%_at_16%_80%,rgb(8_8_7/0.85),transparent_75%)]" />
         {/* Lights up: an ink veil lifts, so the photograph itself paints immediately */}
         <m.div
           aria-hidden="true"
@@ -58,14 +60,14 @@ export function Hero() {
 
         <h1
           id="hero-title"
-          className="display uppercase leading-[0.84] tracking-[0.045em] text-[clamp(4.1rem,24vw,7rem)] md:text-[clamp(7rem,12.5vw,12.5rem)]"
+          className="display uppercase drop-shadow-[0_2px_24px_rgb(0_0_0/0.55)] leading-[0.84] tracking-[0.045em] text-[clamp(4.1rem,24vw,7rem)] md:text-[clamp(7rem,12.5vw,12.5rem)]"
         >
           <LineReveal immediate delay={0.4} innerClassName="gold-text-hero">
             Zenzo
           </LineReveal>
         </h1>
 
-        <m.p {...fadeIn(0.9)} className="eyebrow mt-2 !tracking-[0.46em] text-smoke max-md:!tracking-[0.34em] md:mt-4">
+        <m.p {...fadeIn(0.9)} className="eyebrow mt-2 !tracking-[0.46em] text-bone max-md:!tracking-[0.34em] md:mt-4">
           {hero.tagline.join(' — ')}
         </m.p>
 
