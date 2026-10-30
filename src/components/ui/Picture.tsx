@@ -1,5 +1,7 @@
 import type { ImgHTMLAttributes } from 'react'
+import { altFor } from '../../content/copy'
 import { photoFile, photoSrcSet, type Photo } from '../../content/photos'
+import { useLang } from '../../lib/routing'
 
 type PictureProps = Omit<ImgHTMLAttributes<HTMLImageElement>, 'src' | 'srcSet' | 'alt'> & {
   photo: Photo
@@ -14,6 +16,7 @@ type PictureProps = Omit<ImgHTMLAttributes<HTMLImageElement>, 'src' | 'srcSet' |
 }
 
 export function Picture({ photo, mobile, sizes, priority = false, alt, className, style, ...rest }: PictureProps) {
+  const lang = useLang()
   const fallbackWidth = photo.widths[Math.min(1, photo.widths.length - 1)]
 
   return (
@@ -23,7 +26,7 @@ export function Picture({ photo, mobile, sizes, priority = false, alt, className
         src={photoFile(photo, fallbackWidth)}
         srcSet={photoSrcSet(photo)}
         sizes={sizes}
-        alt={alt ?? photo.alt}
+        alt={alt ?? altFor(photo, lang)}
         width={photo.width}
         height={photo.height}
         loading={priority ? 'eager' : 'lazy'}

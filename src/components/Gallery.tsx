@@ -1,6 +1,7 @@
 import { useState, type CSSProperties } from 'react'
 import { gallerySequence, photos, type Photo } from '../content/photos'
-import { gallery } from '../content/site'
+import { altFor, fmt, useCopy } from '../content/copy'
+import { useLang } from '../lib/routing'
 import { Lightbox } from './Lightbox'
 import { ArrowLink } from './ui/Buttons'
 import { Picture } from './ui/Picture'
@@ -66,6 +67,8 @@ const tiles: Tile[] = [
 ]
 
 export function Gallery() {
+  const { gallery, ui } = useCopy()
+  const lang = useLang()
   const [open, setOpen] = useState<number | null>(null)
 
   return (
@@ -86,8 +89,8 @@ export function Gallery() {
           </div>
           <Reveal className="pb-2">
             <ArrowLink to="gallery">
-              <span className="sm:hidden">View all</span>
-              <span className="hidden sm:inline">View full gallery</span>
+              <span className="sm:hidden">{ui.viewAll}</span>
+              <span className="hidden sm:inline">{ui.viewFullGallery}</span>
             </ArrowLink>
           </Reveal>
         </div>
@@ -102,7 +105,7 @@ export function Gallery() {
                 <button
                   type="button"
                   onClick={() => setOpen(i)}
-                  aria-label={`Open image ${i + 1} of ${gallerySequence.length}: ${tile.photo.alt}`}
+                  aria-label={fmt(ui.openImage, { n: i + 1, total: gallerySequence.length, alt: altFor(tile.photo, lang) })}
                   aria-haspopup="dialog"
                   className="group relative block h-full w-full overflow-hidden bg-coal after:absolute after:inset-2 after:border after:border-gold/0 after:transition-colors after:duration-[1200ms] after:ease-out-expo hover:after:border-gold/45 focus-visible:after:border-gold/45"
                 >
@@ -116,7 +119,7 @@ export function Gallery() {
                     aria-hidden="true"
                     className="eyebrow absolute bottom-4 left-4 !text-[0.625rem] translate-y-1 text-bone opacity-0 transition duration-700 ease-out-expo group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 max-md:hidden"
                   >
-                    View
+                    {ui.view}
                   </span>
                 </button>
               </li>

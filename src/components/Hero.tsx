@@ -1,6 +1,7 @@
 import { m } from 'motion/react'
 import { photos } from '../content/photos'
-import { hero, venue } from '../content/site'
+import { useCopy } from '../content/copy'
+import { venue } from '../content/site'
 import { OutlineButton } from './ui/Buttons'
 import { Picture } from './ui/Picture'
 import { LineReveal } from './ui/Reveal'
@@ -12,6 +13,7 @@ const fadeIn = (delay: number) => ({
 })
 
 export function Hero() {
+  const { hero, ui } = useCopy()
   return (
     <section
       id="home"
@@ -86,7 +88,7 @@ export function Hero() {
             </address>
             <a
               href="#about"
-              aria-label="Scroll to content"
+              aria-label={ui.scrollToContent}
               className="relative block h-10 w-px shrink-0 overflow-hidden bg-line-strong"
             >
               <span className="absolute inset-0 bg-gold motion-safe:animate-scroll-cue" />

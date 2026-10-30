@@ -1,26 +1,26 @@
 import { useRef } from 'react'
-import { nav } from '../content/site'
+import { useCopy } from '../content/copy'
+import { navLayout } from '../content/site'
 import { useScrolled } from '../hooks/useScrolled'
-import { type RouteId, useRoute } from '../lib/routing'
+import { type PageRoute, type RouteId, useRoute } from '../lib/routing'
 import { ConceptStrip } from './ConceptStrip'
 import { LanguageSelect } from './LanguageSelect'
 import { MobileMenu } from './MobileMenu'
 import { Link } from './ui/Link'
 import { Logo } from './ui/Logo'
 
-type Items = typeof nav.left
-
-function NavLinks({ items, current, className = '' }: { items: Items; current: RouteId; className?: string }) {
+function NavLinks({ items, current, className = '' }: { items: readonly PageRoute[]; current: RouteId; className?: string }) {
+  const { navLabels } = useCopy()
   return (
     <ul className={`flex items-center gap-[clamp(1.25rem,2.6vw,2.75rem)] ${className}`}>
       {items.map((item) => (
-        <li key={item.route}>
+        <li key={item}>
           <Link
-            to={item.route}
-            aria-current={current === item.route ? 'page' : undefined}
+            to={item}
+            aria-current={current === item ? 'page' : undefined}
             className="eyebrow group relative block py-3 text-smoke transition-colors duration-500 hover:text-bone aria-[current=page]:text-bone"
           >
-            {item.label}
+            {navLabels[item]}
             {/* Gold indicator: draws in on hover, stays under the current page */}
             <span
               aria-hidden="true"
@@ -36,6 +36,7 @@ function NavLinks({ items, current, className = '' }: { items: Items; current: R
 export function Header() {
   const scrolled = useScrolled(30)
   const route = useRoute()
+  const { ui } = useCopy()
   const menuRef = useRef<HTMLDialogElement>(null)
 
   return (
@@ -49,21 +50,21 @@ export function Header() {
           }`}
         >
           <div className="container-x grid h-[var(--header-h)] grid-cols-[1fr_auto_1fr] items-center gap-6">
-            <nav aria-label="Primary" className="hidden lg:block">
-              <NavLinks items={nav.left} current={route} />
+            <nav aria-label={ui.navPrimary} className="hidden lg:block">
+              <NavLinks items={navLayout.left} current={route} />
             </nav>
 
             <Link
               to="home"
               className="col-start-1 justify-self-start lg:col-start-2 lg:justify-self-center"
-              aria-label="Zenzo — home"
+              aria-label={ui.homeLabel}
             >
               <Logo className="h-11 lg:h-[3.25rem]" />
             </Link>
 
             <div className="col-start-3 flex items-center justify-end gap-8">
-              <nav aria-label="Secondary" className="hidden lg:block">
-                <NavLinks items={nav.right} current={route} />
+              <nav aria-label={ui.navSecondary} className="hidden lg:block">
+                <NavLinks items={navLayout.right} current={route} />
               </nav>
               <div className="hidden lg:block">
                 <LanguageSelect />
@@ -72,7 +73,7 @@ export function Header() {
                 type="button"
                 onClick={() => menuRef.current?.showModal()}
                 aria-haspopup="dialog"
-                aria-label="Open menu"
+                aria-label={ui.openMenu}
                 className="-mr-2 grid size-11 place-items-center lg:hidden"
               >
                 <span aria-hidden="true" className="flex w-6 flex-col gap-[6px]">

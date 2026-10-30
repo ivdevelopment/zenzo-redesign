@@ -1,12 +1,13 @@
 import { PageHero } from '../components/PageHero'
 import { ArrowLink, OutlineButton } from '../components/ui/Buttons'
 import { LineReveal, Reveal } from '../components/ui/Reveal'
-import { lostPage } from '../content/pages'
+import { useCopy } from '../content/copy'
 import { photos } from '../content/photos'
 import { official } from '../content/site'
 
 /** Deliberately minimal: one statement, three steps on the official site, one action. */
 export function LostFoundPage() {
+  const { lostPage, ui } = useCopy()
   return (
     <>
       <PageHero
@@ -42,11 +43,11 @@ export function LostFoundPage() {
             </ol>
             <OutlineButton href={official.lostFound} external className="mt-7 w-full sm:w-auto sm:min-w-72">
               {lostPage.action}
-              <span className="sr-only"> (opens the official website in a new tab)</span>
+              <span className="sr-only">{ui.opensOfficial}</span>
             </OutlineButton>
             <p className="mt-5 max-w-[44ch] text-[0.8125rem] leading-relaxed text-mute">{lostPage.note}</p>
             <div className="mt-6">
-              <ArrowLink to="contact">Contact &amp; directions</ArrowLink>
+              <ArrowLink to="contact">{ui.contactDirections}</ArrowLink>
             </div>
           </Reveal>
         </div>

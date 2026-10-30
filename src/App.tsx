@@ -2,7 +2,8 @@ import { LazyMotion, MotionConfig, domAnimation } from 'motion/react'
 import { useEffect, useRef } from 'react'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
-import { pageTitle, useRoute, type RouteId } from './lib/routing'
+import { useCopy } from './content/copy'
+import { pageTitle, useLang, useRoute, type RouteId } from './lib/routing'
 import { AboutPage } from './pages/AboutPage'
 import { ContactPage } from './pages/ContactPage'
 import { GalleryPage } from './pages/GalleryPage'
@@ -32,6 +33,8 @@ function Page({ route }: { route: RouteId }) {
 
 export default function App() {
   const route = useRoute()
+  const lang = useLang()
+  const { ui } = useCopy()
   const firstRender = useRef(true)
 
   // On every page change: set the title, go to the #anchor if there is one (else return to the top), and hand
@@ -39,7 +42,8 @@ export default function App() {
   // A direct visit to /page/#anchor is handled too: the browser tries to scroll before React has rendered the
   // page, so it is retried once the layout has settled.
   useEffect(() => {
-    document.title = pageTitle(route)
+    document.title = pageTitle(route, lang)
+    document.documentElement.lang = lang
     const hash = window.location.hash.slice(1)
     const toAnchor = () => document.getElementById(hash)?.scrollIntoView()
     if (hash && hash !== 'main') {
@@ -53,7 +57,7 @@ export default function App() {
     }
     window.scrollTo({ top: 0, behavior: 'instant' })
     document.getElementById('main')?.focus({ preventScroll: true })
-  }, [route])
+  }, [route, lang])
 
   return (
     // reducedMotion="user": Motion skips transform animations when the visitor
@@ -64,7 +68,7 @@ export default function App() {
           href="#main"
           className="eyebrow fixed left-4 top-4 z-50 -translate-y-24 bg-gold px-4 py-3 text-ink transition-transform focus:translate-y-0"
         >
-          Skip to content
+          {ui.skipToContent}
         </a>
         <Header />
         <main id="main" tabIndex={-1} className="outline-none">

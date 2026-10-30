@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react'
 import { photos } from '../content/photos'
-import { atmosphere } from '../content/site'
+import { useCopy } from '../content/copy'
 import { ArrowLink } from './ui/Buttons'
 import { Picture } from './ui/Picture'
 import { ClipFrame, LineReveal, Reveal } from './ui/Reveal'
@@ -14,6 +14,7 @@ const fadeMask = 'linear-gradient(to right, transparent 0%, #000 34%, #000 86%, 
  * photograph by a fixed amount rather than floating near it.
  */
 export function Atmosphere() {
+  const { atmosphere, ui } = useCopy()
   return (
     <section id="about" aria-labelledby="about-title" className="relative border-y border-line bg-ink">
       <div className="relative mx-auto max-w-[1680px] lg:min-h-[31rem]">
@@ -34,7 +35,7 @@ export function Atmosphere() {
         {/* Motif + inset: one unit, bottom-aligned with the copy. The inset overlaps the photograph's edge. */}
         <div className="absolute right-(--gutter) top-[9.5rem] z-10 w-[33%] max-w-60 sm:top-[16rem] lg:bottom-12 lg:right-[4%] lg:top-auto lg:flex lg:w-auto lg:max-w-none lg:items-end lg:gap-9">
           <ul
-            aria-label="Music, people, energy"
+            aria-label={ui.musicPeopleEnergy}
             className="eyebrow hidden space-y-4 border-l border-gold/60 pl-5 !leading-none !tracking-[0.5em] text-bone [text-shadow:0_0_14px_rgb(0_0_0/0.9)] lg:block"
           >
             {atmosphere.motif.map((word) => (
@@ -72,7 +73,7 @@ export function Atmosphere() {
               {/* "About Zenzo" opens the venue's own description and published figures */}
               <details className="group mt-5">
                 <summary className="eyebrow inline-flex cursor-pointer list-none items-center gap-3 border-b border-line-strong pb-1.5 text-bone transition-colors duration-500 hover:border-gold hover:text-gold-soft [&::-webkit-details-marker]:hidden">
-                  About Zenzo
+                  {ui.aboutZenzo}
                   <ArrowRight
                     aria-hidden="true"
                     strokeWidth={1.25}
@@ -89,7 +90,7 @@ export function Atmosphere() {
                   ))}
                 </dl>
                 <div className="mt-5">
-                  <ArrowLink to="about">Read more</ArrowLink>
+                  <ArrowLink to="about">{ui.readMore}</ArrowLink>
                 </div>
               </details>
             </Reveal>

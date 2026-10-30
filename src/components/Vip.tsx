@@ -1,15 +1,15 @@
 import { ArrowRight } from 'lucide-react'
 import { useState } from 'react'
-import { photos } from '../content/photos'
-import { vip } from '../content/site'
+import { fmt, useCopy, type Copy } from '../content/copy'
+import { photos, type PhotoKey } from '../content/photos'
 import { ArrowLink } from './ui/Buttons'
 import { Picture } from './ui/Picture'
 import { LineReveal, Reveal } from './ui/Reveal'
 
-type Item = (typeof vip.items)[number]
+type Item = Copy['vip']['items'][number]
 
 /** Where each crop is anchored when it is shown as a wide banner on phones. */
-const bannerFocus: Record<Item['id'], string> = {
+const bannerFocus: Record<string, string> = {
   'bottle-service': 'object-[50%_18%]',
   'private-lounge': 'object-[50%_24%]',
   'private-party': 'object-[50%_38%]',
@@ -36,7 +36,8 @@ function Inclusions({ item }: { item: Item }) {
  * the title at the foot. The inclusions rise from behind the title on hover or when opened.
  */
 function Panel({ item, open, onToggle }: { item: Item; open: boolean; onToggle: () => void }) {
-  const photo = photos[item.photo]
+  const { ui } = useCopy()
+  const photo = photos[item.photo as PhotoKey]
   const detailsId = `${item.id}-details`
   return (
     <li className="group relative isolate aspect-[3/4] overflow-hidden bg-ink">
@@ -80,10 +81,10 @@ function Panel({ item, open, onToggle }: { item: Item; open: boolean; onToggle: 
             onClick={onToggle}
             aria-expanded={open}
             aria-controls={detailsId}
-            aria-label={`${item.title}: ${open ? 'hide' : 'show'} what’s included`}
+            aria-label={fmt(open ? ui.hideIncluded : ui.showIncluded, { title: item.title })}
             className="group/btn mt-5 flex w-full items-center justify-between border-t border-gold/40 pt-3.5 transition-colors duration-700 hover:border-gold"
           >
-            <span className="eyebrow !text-[0.625rem] text-bone/85">What’s included</span>
+            <span className="eyebrow !text-[0.625rem] text-bone/85">{ui.whatsIncluded}</span>
             <ArrowRight
               aria-hidden="true"
               strokeWidth={1.25}
@@ -101,7 +102,7 @@ function Panel({ item, open, onToggle }: { item: Item; open: boolean; onToggle: 
  * Tapping opens the inclusions beneath — it reads as three covers, not a settings list.
  */
 function Row({ item, open, onToggle }: { item: Item; open: boolean; onToggle: () => void }) {
-  const photo = photos[item.photo]
+  const photo = photos[item.photo as PhotoKey]
   const detailsId = `${item.id}-row-details`
   return (
     <li className="-mx-(--gutter) border-b border-gold/25 first:border-t">
@@ -145,6 +146,7 @@ function Row({ item, open, onToggle }: { item: Item; open: boolean; onToggle: ()
 }
 
 export function Vip() {
+  const { vip, ui } = useCopy()
   const [openId, setOpenId] = useState<string | null>(null)
   const toggle = (id: string) => setOpenId((current) => (current === id ? null : id))
 
@@ -169,7 +171,7 @@ export function Vip() {
           <Reveal delay={0.1}>
             <p className="mt-4 max-w-[32ch] text-[0.9375rem] leading-relaxed text-bone/80 lg:mt-5">{vip.intro}</p>
             <ArrowLink to="vip" className="mt-5 lg:mt-6">
-              Discover VIP
+              {ui.discoverVip}
             </ArrowLink>
           </Reveal>
         </div>

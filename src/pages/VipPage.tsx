@@ -3,10 +3,10 @@ import { ArrowLink, OutlineButton } from '../components/ui/Buttons'
 import { Picture } from '../components/ui/Picture'
 import { ClipFrame, LineReveal, Reveal } from '../components/ui/Reveal'
 import { photos, type Photo } from '../content/photos'
-import { vipPage } from '../content/pages'
+import { useCopy, type Copy } from '../content/copy'
 import { official } from '../content/site'
 
-type Chapter = (typeof vipPage.chapters)[number]
+type Chapter = Copy['vipPage']['chapters'][number]
 
 type Layout = {
   photo: Photo
@@ -22,7 +22,7 @@ type Layout = {
 }
 
 /** Three different compositions, alternating sides, so the chapters never read as a template. */
-const layouts: Record<Chapter['id'], Layout> = {
+const layouts: Record<string, Layout> = {
   'bottle-service': {
     photo: photos.vipBottlePage,
     side: 'left',
@@ -66,6 +66,7 @@ function Inclusions({ items }: { items: readonly string[] }) {
 }
 
 function ChapterSection({ chapter }: { chapter: Chapter }) {
+  const { vipPage } = useCopy()
   const layout = layouts[chapter.id]
   const imageFirst = layout.side === 'left'
   const headingId = `${chapter.id}-title`
@@ -114,6 +115,7 @@ function ChapterSection({ chapter }: { chapter: Chapter }) {
 }
 
 export function VipPage() {
+  const { vipPage, ui } = useCopy()
   return (
     <>
       <PageHero
@@ -155,7 +157,7 @@ export function VipPage() {
               <OutlineButton href={official.vip} external className="w-full sm:w-auto sm:min-w-64">
                 {vipPage.enquire}
               </OutlineButton>
-              <ArrowLink to="contact">Visit &amp; directions</ArrowLink>
+              <ArrowLink to="contact">{ui.visitDirections}</ArrowLink>
             </div>
             <p className="mt-6 max-w-[52ch] text-[0.8125rem] leading-relaxed text-mute">{vipPage.closing.note}</p>
           </Reveal>

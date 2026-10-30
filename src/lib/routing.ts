@@ -6,46 +6,67 @@
  * (`/<base>/gallery/`), the build writes one `index.html` per path (see vite.config.ts), and
  * this module only has to keep client-side navigation fast — a direct visit, a refresh or a
  * shared link all load the right page without any redirect trick.
+ *
+ * Languages: English lives at the root, Dutch under `nl/` with Dutch page slugs
+ * (`/<base>/nl/galerij/`). The language is part of the URL, so there is no state to restore.
  */
 import { useSyncExternalStore } from 'react'
+
+export type Lang = 'en' | 'nl'
+export const langs: readonly Lang[] = ['en', 'nl']
 
 export type PageRoute = 'home' | 'gallery' | 'vip' | 'about' | 'contact' | 'lost-found'
 export type RouteId = PageRoute | 'not-found'
 
-export const routes: Record<PageRoute, { path: string; title: string }> = {
-  home: { path: '', title: 'Zenzo' },
-  gallery: { path: 'gallery/', title: 'Gallery' },
-  vip: { path: 'vip/', title: 'VIP Experience' },
-  about: { path: 'about/', title: 'About' },
-  contact: { path: 'contact/', title: 'Contact' },
-  'lost-found': { path: 'lost-found/', title: 'Lost & Found' },
+/** Path of each page, relative to the language root. */
+export const slugs: Record<PageRoute, Record<Lang, string>> = {
+  home: { en: '', nl: '' },
+  gallery: { en: 'gallery/', nl: 'galerij/' },
+  vip: { en: 'vip/', nl: 'vip/' },
+  about: { en: 'about/', nl: 'over-zenzo/' },
+  contact: { en: 'contact/', nl: 'contact/' },
+  'lost-found': { en: 'lost-found/', nl: 'gevonden-voorwerpen/' },
 }
+
+/** Page names, for the document title. */
+const titles: Record<Lang, Record<RouteId, string>> = {
+  en: { home: 'Zenzo', gallery: 'Gallery', vip: 'VIP Experience', about: 'About', contact: 'Contact', 'lost-found': 'Lost & Found', 'not-found': 'Page not found' },
+  nl: { home: 'Zenzo', gallery: 'Galerij', vip: 'VIP-beleving', about: 'Over Zenzo', contact: 'Contact', 'lost-found': 'Gevonden voorwerpen', 'not-found': 'Pagina niet gevonden' },
+}
+const suffixes: Record<Lang, string> = { en: 'Unofficial Redesign Concept', nl: 'Onofficieel redesignconcept' }
 
 /** Vite's base path: "/" locally, "/<repo>/" on GitHub Pages. Always ends with a slash. */
 export const BASE = import.meta.env.BASE_URL
 
-export function hrefFor(route: PageRoute, hash?: string) {
-  return `${BASE}${routes[route].path}${hash ? `#${hash}` : ''}`
+/** Path (relative to the base) of a page in a language. Dutch lives under `nl/`. */
+export function pathFor(route: PageRoute, lang: Lang) {
+  return `${lang === 'nl' ? 'nl/' : ''}${slugs[route][lang]}`
 }
 
-export function routeFromPath(pathname: string): RouteId {
+export function hrefFor(route: PageRoute, lang: Lang, hash?: string) {
+  return `${BASE}${pathFor(route, lang)}${hash ? `#${hash}` : ''}`
+}
+
+export function parsePath(pathname: string): { lang: Lang; route: RouteId } {
   let rel: string
   if (pathname + '/' === BASE) rel = ''
   else if (pathname.startsWith(BASE)) rel = pathname.slice(BASE.length)
   else rel = pathname.replace(/^\//, '')
   rel = rel.replace(/index\.html$/, '').replace(/\/+$/, '')
 
-  for (const [id, route] of Object.entries(routes)) {
-    if (route.path.replace(/\/$/, '') === rel) return id as PageRoute
+  const lang: Lang = rel === 'nl' || rel.startsWith('nl/') ? 'nl' : 'en'
+  if (lang === 'nl') rel = rel.slice(2).replace(/^\//, '')
+
+  for (const [id, slug] of Object.entries(slugs)) {
+    if (slug[lang].replace(/\/$/, '') === rel) return { lang, route: id as PageRoute }
   }
-  return 'not-found'
+  return { lang, route: 'not-found' }
 }
 
-export function pageTitle(route: RouteId) {
-  const suffix = 'Unofficial Redesign Concept'
+export function pageTitle(route: RouteId, lang: Lang) {
+  const suffix = suffixes[lang]
   if (route === 'home') return `Zenzo — ${suffix}`
-  const name = route === 'not-found' ? 'Page not found' : routes[route].title
-  return `${name} — Zenzo (${suffix})`
+  return `${titles[lang][route]} — Zenzo (${suffix})`
 }
 
 const NAVIGATE_EVENT = 'zenzo:navigate'
@@ -59,10 +80,18 @@ function subscribe(onChange: () => void) {
   }
 }
 
+function usePathname() {
+  return useSyncExternalStore(subscribe, () => window.location.pathname, () => BASE)
+}
+
 /** The route for the current URL. Re-renders on link clicks and on back/forward. */
 export function useRoute(): RouteId {
-  const pathname = useSyncExternalStore(subscribe, () => window.location.pathname, () => BASE)
-  return routeFromPath(pathname)
+  return parsePath(usePathname()).route
+}
+
+/** The language of the current URL. */
+export function useLang(): Lang {
+  return parsePath(usePathname()).lang
 }
 
 /** Client-side navigation to a URL produced by `hrefFor`. */

@@ -19,7 +19,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = '/zenzo-redesign/'
 const PORT = 4176
 const origin = `http://localhost:${PORT}`
-const pages = ['', 'gallery/', 'vip/', 'about/', 'contact/', 'lost-found/']
+const pages = ['', 'gallery/', 'vip/', 'about/', 'contact/', 'lost-found/', 'nl/', 'nl/galerij/', 'nl/vip/', 'nl/over-zenzo/', 'nl/contact/', 'nl/gevonden-voorwerpen/']
 const report: Record<string, unknown> = {}
 
 const server = pagesServer(join(root, 'dist-pages'), BASE)

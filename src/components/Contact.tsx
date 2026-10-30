@@ -1,5 +1,6 @@
 import { photos } from '../content/photos'
-import { concept, venue, visit } from '../content/site'
+import { useCopy } from '../content/copy'
+import { concept, venue } from '../content/site'
 import { ArrowLink, OutlineButton } from './ui/Buttons'
 import { Picture } from './ui/Picture'
 import { ClipFrame, LineReveal, Reveal } from './ui/Reveal'
@@ -10,6 +11,7 @@ import { ClipFrame, LineReveal, Reveal } from './ui/Reveal'
  * the nightclub photography.
  */
 export function Contact() {
+  const { ui, visit } = useCopy()
   return (
     <section id="contact" aria-labelledby="contact-title" className="relative border-t border-line bg-ink">
       <div className="relative mx-auto max-w-[1680px] lg:min-h-[28rem]">
@@ -22,7 +24,7 @@ export function Contact() {
             />
           </div>
           <p className="eyebrow absolute right-(--gutter) top-3 !text-[0.5625rem] !tracking-[0.16em] text-bone/60 [text-shadow:0_0_8px_rgb(0_0_0/0.9)] lg:bottom-5 lg:left-(--gutter) lg:right-auto lg:top-auto">
-            Illustrative ·{' '}
+            {ui.illustrative} ·{' '}
             <a
               href={photos.city.credit?.profileUrl}
               target="_blank"
@@ -40,7 +42,7 @@ export function Contact() {
             <p className="eyebrow text-gold">{visit.label}</p>
           </Reveal>
           <h2 id="contact-title" className="display mt-3 text-[clamp(2.2rem,4.2vw,3.9rem)] uppercase leading-[1.02] tracking-[0.03em]">
-            <span className="sr-only">Find Zenzo at </span>
+            <span className="sr-only">{ui.findZenzoAt}</span>
             <LineReveal>{venue.street}</LineReveal>
             <LineReveal delay={0.08}>
               {venue.postcode} {venue.city}
@@ -48,17 +50,17 @@ export function Contact() {
           </h2>
           <Reveal delay={0.1} className="mt-5 lg:mt-6">
             <OutlineButton href={venue.mapsUrl} external className="w-full sm:w-auto sm:min-w-64">
-              Get directions
-              <span className="sr-only"> (opens maps in a new tab)</span>
+              {ui.getDirections}
+              <span className="sr-only">{ui.opensMaps}</span>
             </OutlineButton>
           </Reveal>
 
           <Reveal delay={0.15}>
             <dl className="mt-7 divide-y divide-line border-y border-line text-sm">
               <div className="grid gap-1 py-3 sm:grid-cols-[8.5rem_1fr] sm:gap-4">
-                <dt className="eyebrow pt-0.5 !text-[0.625rem] text-mute">Enquiries</dt>
+                <dt className="eyebrow pt-0.5 !text-[0.625rem] text-mute">{visit.enquiriesLabel}</dt>
                 <dd className="leading-relaxed text-smoke">
-                  VIP reservations and private events — via the official site,{' '}
+                  {visit.enquiriesText}{' '}
                   <a href={concept.officialSite} target="_blank" rel="noopener noreferrer" className="link-line text-bone">
                     {concept.officialSiteLabel}
                   </a>
@@ -68,16 +70,16 @@ export function Contact() {
                 id="lost-found"
                 className="grid scroll-mt-[calc(var(--strip-h)+var(--header-h)+1.5rem)] gap-1 py-3 sm:grid-cols-[8.5rem_1fr] sm:gap-4"
               >
-                <dt className="eyebrow pt-0.5 !text-[0.625rem] text-mute">Lost &amp; Found</dt>
+                <dt className="eyebrow pt-0.5 !text-[0.625rem] text-mute">{ui.lostFound}</dt>
                 <dd className="leading-relaxed text-smoke">
-                  Lost property is handled by Zenzo through the same official site.
+                  {visit.lostText}
                 </dd>
               </div>
             </dl>
             <p className="mt-4 max-w-[52ch] text-[0.8125rem] leading-relaxed text-mute">{visit.note}</p>
             <div className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
-              <ArrowLink to="contact">All contact details</ArrowLink>
-              <ArrowLink to="lost-found">Lost &amp; Found</ArrowLink>
+              <ArrowLink to="contact">{ui.allContact}</ArrowLink>
+              <ArrowLink to="lost-found">{ui.lostFound}</ArrowLink>
             </div>
           </Reveal>
         </div>

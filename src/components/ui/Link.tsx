@@ -1,5 +1,5 @@
 import type { AnchorHTMLAttributes, MouseEvent } from 'react'
-import { hrefFor, navigate, type PageRoute } from '../../lib/routing'
+import { hrefFor, navigate, useLang, type PageRoute } from '../../lib/routing'
 
 type LinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> & {
   to: PageRoute
@@ -11,7 +11,7 @@ type LinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> & {
  * without JavaScript — that navigates client-side on a plain click.
  */
 export function Link({ to, hash, onClick, children, ...rest }: LinkProps) {
-  const href = hrefFor(to, hash)
+  const href = hrefFor(to, useLang(), hash)
 
   const handle = (event: MouseEvent<HTMLAnchorElement>) => {
     onClick?.(event)

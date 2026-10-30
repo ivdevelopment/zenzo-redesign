@@ -87,7 +87,7 @@ Links now lead to pages ("View full gallery" → `/gallery/`, "Discover VIP" →
 2. **Official deep links.** `#contact`, `#vip` and `#contact?type=lost-found` are the anchors zenzobar.be itself uses today; if the official site is
    restructured they will land at its top. The "Lost & Found" steps describe the form as it exists now.
 3. **Sparse pages by design.** Contact and Lost & Found rely on layout, imagery and the Bruges photograph, not content — the brief forbids inventing any.
-4. **Language selector** still lists NL/FR as disabled; no translations.
+4. **Language selector** still listed NL/FR as disabled at this stage; Dutch was added afterwards (see README).
 5. **Pages are client-rendered.** Each route's `index.html` is the same app shell; the page title and content appear only after JavaScript runs. With
    `noindex` that does not matter here; for a real site, prerender.
 6. **Not verified:** Safari/Firefox, a physical phone, a screen reader; axe covers only part of accessibility.

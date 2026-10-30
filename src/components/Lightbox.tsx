@@ -1,6 +1,8 @@
 import { ArrowLeft, ArrowRight, X } from 'lucide-react'
 import { useEffect, useRef, type KeyboardEvent, type PointerEvent } from 'react'
+import { altFor, fmt, useCopy } from '../content/copy'
 import { photoSrcSet, type Photo } from '../content/photos'
+import { useLang } from '../lib/routing'
 import { Picture } from './ui/Picture'
 
 type LightboxProps = {
@@ -18,6 +20,8 @@ const pageButton =
  * returned to the triggering tile, Escape closes, arrow keys and swipes page.
  */
 export function Lightbox({ items, index, onChange }: LightboxProps) {
+  const { ui } = useCopy()
+  const lang = useLang()
   const dialogRef = useRef<HTMLDialogElement>(null)
   const swipeStart = useRef<number | null>(null)
   const open = index !== null
@@ -65,7 +69,7 @@ export function Lightbox({ items, index, onChange }: LightboxProps) {
   return (
     <dialog
       ref={dialogRef}
-      aria-label="Gallery viewer"
+      aria-label={ui.galleryViewer}
       onClose={() => onChange(null)}
       onKeyDown={onKeyDown}
       className="m-0 h-dvh max-h-none w-full max-w-none bg-ink p-0 text-bone open:animate-fade"
@@ -84,7 +88,7 @@ export function Lightbox({ items, index, onChange }: LightboxProps) {
               className="eyebrow -mr-2 flex items-center gap-2 px-2 py-3"
               autoFocus
             >
-              Close <X aria-hidden="true" className="size-4" strokeWidth={1.25} />
+              {ui.close} <X aria-hidden="true" className="size-4" strokeWidth={1.25} />
             </button>
           </div>
 
@@ -105,18 +109,18 @@ export function Lightbox({ items, index, onChange }: LightboxProps) {
 
           <div className="container-x flex shrink-0 flex-col gap-4 border-t border-line py-5 md:flex-row md:items-center md:justify-between">
             <p className="max-w-[64ch] text-sm leading-relaxed text-smoke">
-              {photo.alt}.{' '}
+              {altFor(photo, lang)}.{' '}
               <span className="text-mute">
                 {photo.credit
-                  ? `Photograph by ${photo.credit.name} on Unsplash.`
-                  : 'Photograph from zenzobar.be, colour-graded for this concept.'}
+                  ? fmt(ui.photoBy, { name: photo.credit.name })
+                  : ui.photoFrom}
               </span>
             </p>
             <div className="flex gap-2">
-              <button type="button" onClick={() => step(-1)} className={pageButton} aria-label="Previous image">
+              <button type="button" onClick={() => step(-1)} className={pageButton} aria-label={ui.previousImage}>
                 <ArrowLeft aria-hidden="true" className="size-4" strokeWidth={1.25} />
               </button>
-              <button type="button" onClick={() => step(1)} className={pageButton} aria-label="Next image">
+              <button type="button" onClick={() => step(1)} className={pageButton} aria-label={ui.nextImage}>
                 <ArrowRight aria-hidden="true" className="size-4" strokeWidth={1.25} />
               </button>
             </div>

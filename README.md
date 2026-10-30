@@ -5,7 +5,7 @@
 > (Zenzo, Eiermarkt 13, 8000 Brugge). Not endorsed or operated by the venue.
 
 A portfolio redesign of the Zenzo nightclub website, in a black / bronze / champagne-gold system: Home, Gallery, VIP Experience, About,
-Contact and Lost & Found, using Zenzo's own logo and photography.
+Contact and Lost & Found, using Zenzo's own logo and photography. Available in English and Dutch (Nederlands).
 
 **Live demo:** <https://ivdevelopment.github.io/zenzo-redesign/> · **Author:** Ian Verlinden
 
@@ -53,6 +53,7 @@ npm run preview      # serves dist/ on http://localhost:4173
 | `npm run assets` | Crop, colour-grade and resize them into `public/assets/` and `src/content/assets.generated.json` |
 | `npm run qa` | Homepage Playwright + axe checks and screenshots against `npm run preview` (see below) |
 | `npm run qa:links` | Link audit (internal + official + named links, from the homepage and a subpage) and Pages-readiness scan of `dist-pages/` (localhost, dev paths, base-aware URLs, secrets); needs `build:pages` first |
+| `npm run qa:nl` | Dutch pages (7 pages × 4 widths: status, `lang`, title, h1, disclaimer, overflow, images, console, axe) and the language switcher both ways; needs `build:pages` first |
 | `npm run qa:pages` | Inner pages + routing under the Pages base path (starts its own server on :4175; needs `build:pages` first) |
 | `node scripts/shot.ts <width> <selector|page> <out.png>` | Screenshot one section (or the page) at a width, after reveals have fired |
 
@@ -66,6 +67,10 @@ npm run preview      # serves dist/ on http://localhost:4173
 | `/about/` | About |
 | `/contact/` | Contact |
 | `/lost-found/` | Lost & Found |
+
+Dutch lives under `/nl/` with Dutch slugs: `/nl/`, `/nl/galerij/`, `/nl/vip/`, `/nl/over-zenzo/`, `/nl/contact/`, `/nl/gevonden-voorwerpen/`.
+The language is part of the URL; the header switcher (and the phone menu) links each page to its twin. Copy lives in
+`src/content/` — English in `site.ts` / `pages.ts` / `copy.ts`, Dutch in `nl.ts` (same shape, enforced by the type check).
 
 Real paths with a tiny History-API router (`src/lib/routing.ts`); the build writes one `index.html` per route and a `404.html`, so direct links and
 refreshes work on GitHub Pages with no redirect trick. Details: [docs/DESIGN.md](docs/DESIGN.md#routing).
@@ -92,7 +97,7 @@ Before publishing, run `npm run qa:links` (link audit and readiness scan).
 
 - Disclaimer strip above the header at every scroll position, repeated in the mobile menu and footer.
 - Venue facts only from zenzobar.be, nothing invented. Opening hours omitted (the official site's NL and EN pages
-  disagree). Language selector shows NL/FR as "soon" and disabled.
+  disagree). The language selector offers EN and NL; FR is shown as "soon" and disabled.
 - No booking, payment, contact form, email or phone. Enquiries point to the official website.
 - `noindex, nofollow` meta and a `Disallow: /` `robots.txt`. No analytics or trackers.
 

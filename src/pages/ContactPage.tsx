@@ -2,11 +2,12 @@ import { PageHero } from '../components/PageHero'
 import { ArrowLink, OutlineButton } from '../components/ui/Buttons'
 import { Picture } from '../components/ui/Picture'
 import { ClipFrame, LineReveal, Reveal } from '../components/ui/Reveal'
-import { contactPage } from '../content/pages'
+import { useCopy } from '../content/copy'
 import { photos } from '../content/photos'
 import { concept, venue } from '../content/site'
 
 export function ContactPage() {
+  const { contactPage, ui } = useCopy()
   const credit = photos.cityTall.credit
   return (
     <>
@@ -23,13 +24,13 @@ export function ContactPage() {
         <div className="container-x grid gap-8 lg:grid-cols-12 lg:gap-x-12">
           <div className="lg:col-span-7">
             <Reveal>
-              <p className="eyebrow text-gold">Visit us</p>
+              <p className="eyebrow text-gold">{ui.visitUs}</p>
             </Reveal>
             <h2
               id="contact-page-title"
               className="display mt-4 text-[clamp(2.4rem,5vw,4.5rem)] uppercase leading-[1.02] tracking-[0.03em]"
             >
-              <span className="sr-only">Find Zenzo at </span>
+              <span className="sr-only">{ui.findZenzoAt}</span>
               <LineReveal>{venue.street}</LineReveal>
               <LineReveal delay={0.08}>
                 {venue.postcode} {venue.city}
@@ -37,14 +38,14 @@ export function ContactPage() {
             </h2>
             <Reveal delay={0.1} className="mt-6">
               <OutlineButton href={venue.mapsUrl} external className="w-full sm:w-auto sm:min-w-72">
-                Get directions
-                <span className="sr-only"> (opens maps in a new tab)</span>
+                {ui.getDirections}
+                <span className="sr-only">{ui.opensMaps}</span>
               </OutlineButton>
             </Reveal>
 
             {/* Where each kind of enquiry goes */}
             <Reveal delay={0.15}>
-              <h3 className="eyebrow mt-8 text-gold md:mt-10">Where to ask</h3>
+              <h3 className="eyebrow mt-8 text-gold md:mt-10">{ui.whereToAsk}</h3>
               <ul className="mt-4 border-t border-line-strong">
                 {contactPage.routing.map((row) => (
                   <li
@@ -61,7 +62,7 @@ export function ContactPage() {
                       )}
                       {'page' in row && (
                         <ArrowLink to="lost-found" className="mt-2.5">
-                          Lost &amp; Found
+                          {ui.lostFound}
                         </ArrowLink>
                       )}
                     </div>
@@ -90,7 +91,7 @@ export function ContactPage() {
               </div>
             </ClipFrame>
             <p className="eyebrow mt-3 !text-[0.5625rem] !tracking-[0.16em] text-bone/60">
-              Illustrative ·{' '}
+              {ui.illustrative} ·{' '}
               <a href={credit?.profileUrl} target="_blank" rel="noopener noreferrer" className="link-line hover:text-bone">
                 {credit?.name}
               </a>{' '}

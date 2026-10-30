@@ -1,4 +1,5 @@
 import { ArrowUpRight } from 'lucide-react'
+import { useCopy } from '../content/copy'
 import { concept } from '../content/site'
 
 /**
@@ -8,10 +9,11 @@ import { concept } from '../content/site'
  * narrowest phones.
  */
 export function ConceptStrip({ showLink = true }: { showLink?: boolean }) {
+  const { ui } = useCopy()
   return (
     <div className="border-b border-line bg-ink">
       <div className="container-x flex min-h-[var(--strip-h)] items-center justify-between gap-4 py-1">
-        <p className="text-[0.6875rem] leading-snug tracking-[0.04em] text-smoke">{concept.disclaimer}</p>
+        <p className="text-[0.6875rem] leading-snug tracking-[0.04em] text-smoke">{ui.disclaimer}</p>
         {showLink && (
           <a
             href={concept.officialSite}
@@ -19,7 +21,7 @@ export function ConceptStrip({ showLink = true }: { showLink?: boolean }) {
             rel="noopener noreferrer"
             className="eyebrow link-line hidden shrink-0 items-center gap-1 !text-[0.625rem] !tracking-[0.2em] text-gold-soft sm:inline-flex"
           >
-            Official site <ArrowUpRight aria-hidden="true" className="size-3" strokeWidth={1.5} />
+            {ui.officialSite} <ArrowUpRight aria-hidden="true" className="size-3" strokeWidth={1.5} />
           </a>
         )}
       </div>

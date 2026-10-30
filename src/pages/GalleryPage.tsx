@@ -5,7 +5,8 @@ import { ArrowLink } from '../components/ui/Buttons'
 import { Picture } from '../components/ui/Picture'
 import { ClipFrame, Reveal } from '../components/ui/Reveal'
 import { type Photo, photos } from '../content/photos'
-import { galleryPage } from '../content/pages'
+import { altFor, fmt, useCopy } from '../content/copy'
+import { useLang } from '../lib/routing'
 
 /** The viewer order is the page order, top to bottom. */
 const sequence: Photo[] = [
@@ -37,12 +38,14 @@ type FrameProps = {
 
 /** One framed photograph that opens the viewer. */
 function Frame({ photo, sizes, frame, onOpen, label = true }: FrameProps) {
+  const { ui } = useCopy()
+  const lang = useLang()
   const index = at(photo)
   return (
     <button
       type="button"
       onClick={() => onOpen(index)}
-      aria-label={`Open image ${index + 1} of ${sequence.length}: ${photo.alt}`}
+      aria-label={fmt(ui.openImage, { n: index + 1, total: sequence.length, alt: altFor(photo, lang) })}
       aria-haspopup="dialog"
       className={`group relative block w-full overflow-hidden bg-coal after:absolute after:inset-2 after:border after:border-gold/0 after:transition-colors after:duration-[1200ms] after:ease-out-expo hover:after:border-gold/45 focus-visible:after:border-gold/45 ${frame}`}
     >
@@ -57,7 +60,7 @@ function Frame({ photo, sizes, frame, onOpen, label = true }: FrameProps) {
           aria-hidden="true"
           className="eyebrow absolute bottom-4 left-4 !text-[0.625rem] translate-y-1 text-bone opacity-0 transition duration-700 ease-out-expo group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 max-md:hidden"
         >
-          View
+          {ui.view}
         </span>
       )}
     </button>
@@ -65,6 +68,7 @@ function Frame({ photo, sizes, frame, onOpen, label = true }: FrameProps) {
 }
 
 export function GalleryPage() {
+  const { galleryPage, ui } = useCopy()
   const [open, setOpen] = useState<number | null>(null)
 
   return (
@@ -77,7 +81,7 @@ export function GalleryPage() {
         focus="object-[50%_35%]"
       />
 
-      <section aria-label="Photographs" className="bg-ink pb-10 pt-8 md:pb-16 md:pt-12">
+      <section aria-label={ui.photographs} className="bg-ink pb-10 pt-8 md:pb-16 md:pt-12">
         {/* I — one dominant landscape, a tall black-and-white frame set lower, a small detail on the baseline */}
         <div className="container-x">
           <ClipFrame>
@@ -163,8 +167,8 @@ export function GalleryPage() {
         <div className="container-x mt-6 flex flex-col gap-5 border-t border-line pt-5 md:mt-10 md:flex-row md:items-center md:justify-between">
           <p className="max-w-[60ch] text-[0.8125rem] leading-relaxed text-mute">{galleryPage.note}</p>
           <div className="flex flex-wrap gap-x-8 gap-y-4">
-            <ArrowLink to="vip">The VIP experience</ArrowLink>
-            <ArrowLink to="contact">Visit &amp; directions</ArrowLink>
+            <ArrowLink to="vip">{ui.theVipExperience}</ArrowLink>
+            <ArrowLink to="contact">{ui.visitDirections}</ArrowLink>
           </div>
         </div>
       </section>

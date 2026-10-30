@@ -3,18 +3,19 @@ import { ArrowLink, OutlineButton } from '../components/ui/Buttons'
 import { Picture } from '../components/ui/Picture'
 import { ClipFrame, LineReveal, Reveal } from '../components/ui/Reveal'
 import { photos, type Photo } from '../content/photos'
-import { aboutPage } from '../content/pages'
-import { atmosphere, venue } from '../content/site'
+import { useCopy } from '../content/copy'
+import { venue } from '../content/site'
 
 /** One image per word of the MUSIC / PEOPLE / ENERGY motif, in three different grades. */
 const motifPhotos: Photo[] = [photos.galRingDetail, photos.galArmsNoir, photos.galLaserLines]
 const motifFrames = ['aspect-[5/4]', 'aspect-[5/4] md:aspect-[4/5]', 'aspect-[5/4]']
 
 function CityCredit({ className = '' }: { className?: string }) {
+  const { ui } = useCopy()
   const credit = photos.cityTall.credit
   return (
     <p className={`eyebrow !text-[0.5625rem] !tracking-[0.16em] text-bone/60 ${className}`}>
-      Illustrative ·{' '}
+      {ui.illustrative} ·{' '}
       <a href={credit?.profileUrl} target="_blank" rel="noopener noreferrer" className="link-line hover:text-bone">
         {credit?.name}
       </a>{' '}
@@ -24,6 +25,7 @@ function CityCredit({ className = '' }: { className?: string }) {
 }
 
 export function AboutPage() {
+  const { aboutPage, atmosphere, ui } = useCopy()
   return (
     <>
       <PageHero
@@ -50,7 +52,7 @@ export function AboutPage() {
       </section>
 
       {/* Image / text composition: a black-and-white frame with an ember inset crossing its corner */}
-      <section aria-label="The venue" className="bg-ink py-12 md:py-20">
+      <section aria-label={ui.theVenue} className="bg-ink py-12 md:py-20">
         <div className="container-x grid items-center gap-8 lg:grid-cols-12 lg:gap-x-12">
           <div className="relative lg:col-span-7">
             <ClipFrame>
@@ -90,7 +92,7 @@ export function AboutPage() {
       <section aria-labelledby="motif-title" className="border-y border-line bg-coal py-10 md:py-16">
         <div className="container-x">
           <h2 id="motif-title" className="sr-only">
-            Music, people, energy
+            {ui.musicPeopleEnergy}
           </h2>
           <ol className="grid gap-8 md:grid-cols-3 md:gap-x-6">
             {aboutPage.motif.map((item, i) => (
@@ -118,7 +120,7 @@ export function AboutPage() {
       </section>
 
       {/* Published figures */}
-      <section aria-label="Venue facts" className="bg-ink py-10 md:py-16">
+      <section aria-label={ui.venueFacts} className="bg-ink py-10 md:py-16">
         <div className="container-x">
           <dl className="grid grid-cols-3 border-y border-line-strong">
             {atmosphere.facts.map((fact) => (
@@ -162,13 +164,13 @@ export function AboutPage() {
             <Reveal delay={0.1}>
               <p className="mt-5 max-w-[40ch] text-[1.0625rem] leading-relaxed text-bone/85">{aboutPage.place.text}</p>
               <address className="mt-4 text-sm not-italic text-smoke">
-                {venue.street}, {venue.postcode} {venue.city}, {venue.country}
+                {venue.street}, {venue.postcode} {venue.city}, {ui.country}
               </address>
               <div className="mt-7 flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-8">
                 <OutlineButton to="contact" className="w-full sm:w-auto sm:min-w-64">
-                  Visit &amp; directions
+                  {ui.visitDirections}
                 </OutlineButton>
-                <ArrowLink to="gallery">Explore the gallery</ArrowLink>
+                <ArrowLink to="gallery">{ui.exploreGallery}</ArrowLink>
               </div>
             </Reveal>
           </div>

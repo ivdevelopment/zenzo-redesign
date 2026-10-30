@@ -15,7 +15,8 @@
     "qa": "node scripts/qa.ts",
     "preview:pages": "node scripts/serve-static.ts dist-pages /zenzo-redesign/ 4174",
     "qa:pages": "node scripts/qa-pages.ts",
-    "qa:links": "node scripts/qa-links.ts"
+    "qa:links": "node scripts/qa-links.ts",
+    "qa:nl": "node scripts/qa-nl.ts"
   },
   "dependencies": {
     "@fontsource-variable/manrope": "^5.3.0",

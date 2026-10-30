@@ -15,7 +15,6 @@ import type { PageRoute } from '../lib/routing'
  */
 
 export const concept = {
-  disclaimer: 'Unofficial redesign concept — Not affiliated with Zenzo.',
   /** Footer attribution. Set to the designer’s name before sharing. */
   author: 'Ian Verlinden',
   officialSite: 'https://zenzobar.be/',
@@ -46,26 +45,13 @@ export const venue = {
   ],
 }
 
-export const nav: Record<'left' | 'right', readonly { route: PageRoute; label: string }[]> = {
-  left: [
-    { route: 'home', label: 'Home' },
-    { route: 'gallery', label: 'Gallery' },
-    { route: 'vip', label: 'VIP Experience' },
-  ],
-  right: [
-    { route: 'about', label: 'About' },
-    { route: 'contact', label: 'Contact' },
-    { route: 'lost-found', label: 'Lost & Found' },
-  ],
+/** Which pages sit on which side of the header; labels live in copy.ts. */
+export const navLayout: Record<'left' | 'right', readonly PageRoute[]> = {
+  left: ['home', 'gallery', 'vip'],
+  right: ['about', 'contact', 'lost-found'],
 }
 
-export const navAll = [...nav.left, ...nav.right]
-
-export const languages = [
-  { code: 'EN', label: 'English', available: true },
-  { code: 'NL', label: 'Nederlands', available: false },
-  { code: 'FR', label: 'Français', available: false },
-] as const
+export const navAll: readonly PageRoute[] = [...navLayout.left, ...navLayout.right]
 
 export const hero = {
   label: ['Bruges', 'Nightlife', 'Redefined'],
@@ -129,4 +115,7 @@ export const vip = {
 export const visit = {
   label: 'Visit us',
   note: 'This concept has no contact form and sends nothing anywhere — nothing you do here reaches Zenzo.',
+  enquiriesLabel: 'Enquiries',
+  enquiriesText: 'VIP reservations and private events — via the official site,',
+  lostText: 'Lost property is handled by Zenzo through the same official site.',
 }
